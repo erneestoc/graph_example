@@ -1,6 +1,7 @@
 package com.example;
 
 import org.apache.tinkerpop.gremlin.process.traversal.Order;
+import org.apache.tinkerpop.gremlin.process.traversal.P;
 import org.apache.tinkerpop.gremlin.process.traversal.Scope;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.GremlinDsl;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
@@ -16,10 +17,11 @@ public interface ExampleTraversalDsl<S, E> extends GraphTraversal.Admin<S, E> {
     }
 
     public default GraphTraversal<S, Map<Object, Long>> suggestedFriends() {
-    	return out("friendship")
+    	return out("friendship").aggregate("x")
     		.as("myFriends")
     		.out("friendship")
     		.as("friendsOfFriends")
+                .where(P.without("x"))
     		.groupCount()
             .by("email")
             .order(Scope.local)
