@@ -16,10 +16,8 @@ public interface ExampleTraversalDsl<S, E> extends GraphTraversal.Admin<S, E> {
     }
 
     public default GraphTraversal<S, Map<Object, Long>> suggestedFriends() {
-        GraphTraversal<S, Vertex> traversal = out("friendship")
-                .as("myFriends");
-
-        return traversal
+    	return out("friendship")
+    		.as("myFriends")
     		.out("friendship")
     		.as("friendsOfFriends")
     		.groupCount()
