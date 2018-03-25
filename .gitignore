@@ -3,3 +3,4 @@ build/
 out/
 graph.iml
 .gradle/
+.DS_Store

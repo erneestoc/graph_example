@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.Map;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.janusgraph.core.Cardinality;
@@ -41,8 +42,9 @@ class Example {
         Long friendSize = graph.traversal(ExampleTraversalSource.class)
                             .user(email1).friends().count().next();
         System.out.println("[Example] - User "+name+" has "+friendSize+" friends.");
-        String friendsOfFriends = graph.traversal(ExampleTraversalSource.class)
-                            .user(email1).suggestedFriends().next().toString();
+        long limit = 10;
+        Map<Object, Long> friendsOfFriends = graph.traversal(ExampleTraversalSource.class)
+                            .user(email1).suggestedFriends(limit).next();
         System.out.println(friendsOfFriends);
         System.exit(0);
     }

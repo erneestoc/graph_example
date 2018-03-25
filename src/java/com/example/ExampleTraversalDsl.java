@@ -16,7 +16,7 @@ public interface ExampleTraversalDsl<S, E> extends GraphTraversal.Admin<S, E> {
         return out("friendship");
     }
 
-    public default GraphTraversal<S, Map<Object, Long>> suggestedFriends() {
+    public default GraphTraversal<S, Map<Object, Long>> suggestedFriends(Long limit) {
     	return out("friendship").aggregate("x")
     		.as("myFriends")
     		.out("friendship")
@@ -25,6 +25,7 @@ public interface ExampleTraversalDsl<S, E> extends GraphTraversal.Admin<S, E> {
     		.groupCount()
             .by("email")
             .order(Scope.local)
-            .by(Column.values, Order.decr);
+            .by(Column.values, Order.decr)
+                .limit(Scope.local, limit);
     }
 }
